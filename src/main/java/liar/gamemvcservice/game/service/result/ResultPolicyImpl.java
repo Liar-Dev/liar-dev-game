@@ -29,9 +29,7 @@ public class ResultPolicyImpl implements ResultPolicy {
      */
     @Override
     public boolean checkWhoWin(Game game, List<VotedResult> votedResults) {
-        if (votedResults.size() == 1) {
-            if (getGameRole(game.getId(), votedResults) == LIAR) return true;
-        }
+        if (votedResults.size() == 1) return getGameRole(game.getId(), votedResults) == LIAR;
         return false;
     }
 
@@ -57,7 +55,7 @@ public class ResultPolicyImpl implements ResultPolicy {
 
 
     private GameRole getGameRole(String gameId, List<VotedResult> votedResults) {
-        return getJoinPlayer(gameId, votedResults.get(0).getLiarId())
+        return getJoinPlayer(gameId, votedResults.get(0).getLiarId()) // 다득표 인원을 판단하기 위한 get(0) (다득 표순서대로 내림차순)
                 .getPlayer().getGameRole();
     }
 
